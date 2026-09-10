@@ -1,0 +1,25 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.potatonium.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MinecraftClientMixin",
+    "WorldRendererMixin",
+    "ChunkBuilderMixin",
+    "EntityRenderDispatcherMixin",
+    "ParticleManagerMixin",
+    "BlockEntityRenderDispatcherMixin"
+  ],
+  "client": [
+    "MinecraftClientMixin",
+    "WorldRendererMixin",
+    "ChunkBuilderMixin",
+    "EntityRenderDispatcherMixin",
+    "ParticleManagerMixin",
+    "BlockEntityRenderDispatcherMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
