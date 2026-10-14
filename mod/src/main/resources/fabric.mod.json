@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "maazxclient",
+  "version": "${version}",
+  "name": "MaazXClient",
+  "description": "A lightweight client-side visibility and performance HUD mod for Minecraft 1.20.1.",
+  "authors": ["MaazX"],
+  "license": "MIT",
+  "icon": "assets/client-icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "main": ["com.maazx.client.MaazXClient"],
+    "client": ["com.maazx.client.MaazXClientClient"],
+    "modmenu": ["com.maazx.client.integration.ModMenuIntegration"]
+  },
+  "mixins": ["maazxclient.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "fabric-api": "*",
+    "minecraft": "1.20.1",
+    "java": ">=21"
+  },
+  "suggests": {
+    "modmenu": ">=7.2.2"
+  }
+}

@@ -1,0 +1,63 @@
+name: Build
+
+on:
+  push:
+    branches: ["**"]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  mod:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - uses: gradle/actions/setup-gradle@v4
+      - run: ./gradlew build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: maazxclient-mod
+          path: mod/build/libs/maazxclient-1.0.0.jar
+
+  windows:
+    runs-on: windows-latest
+    needs: mod
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: maazxclient-mod
+          path: mod/build/libs
+      - name: Build launcher
+        run: |
+          cmake -S launcher -B launcher/build -A x64
+          cmake --build launcher/build --config Release
+      - name: Build installer
+        shell: pwsh
+        run: |
+          choco install innosetup --no-progress -y
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer\setup.iss
+      - uses: actions/upload-artifact@v4
+        with:
+          name: maazxclient-windows
+          path: |
+            launcher/build/MaazXLauncher.exe
+            launcher/build/MaazXLauncher-Setup.exe
+            mod/build/libs/maazxclient-1.0.0.jar
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$env:GITHUB_REF_NAME" `
+            launcher/build/MaazXLauncher.exe `
+            launcher/build/MaazXLauncher-Setup.exe `
+            mod/build/libs/maazxclient-1.0.0.jar `
+            --title "MaazX Ultra $env:GITHUB_REF_NAME" `
+            --notes "MaazXClient Fabric mod and Windows launcher companion for Minecraft 1.20.1. This release does not claim or guarantee a particular FPS."

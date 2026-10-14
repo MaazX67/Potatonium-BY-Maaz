@@ -1,6 +1,10 @@
 pluginManagement {
-	repositories {
-		mavenCentral()
-		gradlePluginPortal()
-	}
+    repositories {
+        maven { url = "https://maven.fabricmc.net/" }
+        gradlePluginPortal()
+        mavenCentral()
+    }
 }
+
+rootProject.name = "MaazX-Ultra"
+include(":mod")
