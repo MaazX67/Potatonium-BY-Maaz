@@ -33,7 +33,7 @@ The mod creates `config/maazxclient.properties` on first run:
 | --- | --- | --- |
 | `hud_enabled` | `true` | Show FPS and used JVM heap in the top-right corner. |
 | `entity_culling_enabled` | `true` | Skip rendering non-player entities beyond the configured distance. |
-| `entity_cull_distance` | `48` | Render distance in blocks for non-player entities; accepted range is 16–128. |
+| `entity_cull_distance` | `32` | Render distance in blocks for non-player entities; accepted range is 16–128. |
 
 The HUD toggle is **F3+M**. Entity culling affects visuals only and does not reduce entity ticks or server work.
 
